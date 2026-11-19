@@ -1,0 +1,31 @@
+# === Secrets & local config ===
+configs/gcp.env
+.env
+
+# === Data & artifacts (large / generated) ===
+data/
+*.csv
+*.parquet
+*.npy
+*.pt
+*.safetensors
+artifacts/
+folds/
+kaggle_upload/
+
+# === Python ===
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+
+# === IDE / OS ===
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+.DS_Store
+
+# === Explicit keeps (use git add -f if needed) ===
+# configs/gcp.env.example  — tracked (not matched by rules above)
+# results.csv              — force-add when ready: git add -f results.csv
