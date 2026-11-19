@@ -118,3 +118,8 @@ Desktop.ini
 !src/
 !kaggle_inference/
 !notebooks/
+
+# === Agent Markdown Files & Root Markdown Files ===
+/*.md
+.agent/**/*.md
+
