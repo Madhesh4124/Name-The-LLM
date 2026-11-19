@@ -24,7 +24,7 @@ Add an accelerator flag only if the chosen machine type requires it [verify for 
 ## Job wrapper (scripts/run_job.sh, create if missing)
 1. Resume from the latest checkpoint in $BUCKET/ckpt/<run_id>/ if present.
 2. Run training inside tmux, writing a checkpoint to the bucket every N steps.
-3. On finish: mirror artifacts to the bucket under $BUCKET/oof/<exp>/ (oof.npy, config.yaml, metrics.json, confusion_matrix.csv, env.txt) and $BUCKET/test/<exp>/ (test.npy), then `sudo shutdown -h now`.
+3. On finish: mirror artifacts to the bucket under $BUCKET/oof/<exp>/ (oof.npy, config.yaml, metrics.json, confusion_matrix.csv, env.txt, git_commit.txt) and $BUCKET/test/<exp>/ (test.npy), then `sudo shutdown -h now`.
 4. If the VM was preempted, restart it (with confirmation) and rerun the same command; it must resume.
 
 ## Pilot before full run

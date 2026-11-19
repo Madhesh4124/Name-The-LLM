@@ -1,6 +1,9 @@
 # === Secrets & local config ===
 configs/gcp.env
+*gcp.env
 .env
+*.env
+!configs/gcp.env.example
 
 # === Data & artifacts (large / generated) ===
 data/
