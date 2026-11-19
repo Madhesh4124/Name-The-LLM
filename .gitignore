@@ -1,34 +1,120 @@
-# === Secrets & local config ===
+# ==============================================================================
+# Git Ignore Configuration: Name That LLM
+# Final Deliverable Target: Standalone Kaggle Offline Inference Notebook / Script
+# ==============================================================================
+
+# === Secrets, Credentials & Local Configs ===
 configs/gcp.env
 *gcp.env
 .env
 *.env
+.env.*
+kaggle.json
+*credentials*.json
+*service-account*.json
+*.pem
+*.key
 !configs/gcp.env.example
 
-# === Data & artifacts (large / generated) ===
+# === Datasets & Raw Competition Data ===
 data/
+datasets/
+raw_data/
 *.csv
+*.tsv
 *.parquet
-*.npy
-*.pt
-*.safetensors
+*.jsonl
+*.zip
+*.tar
+*.tar.gz
+*.gz
+# Keep explicit tracked configs
+!configs/labels.json
+
+# === Heavy Model Artifacts, Weights & Checkpoints ===
 artifacts/
+ckpt/
+checkpoints/
+runs/
+wandb/
+lightning_logs/
+*.npy
+*.npz
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.onnx
+*.tflite
+*.joblib
+*.pkl
+*.pickle
 folds/
 kaggle_upload/
+kaggle_download/
+submissions/
+submission.parquet
 
-# === Python ===
+# === Caches, Logs & Temporary Files ===
+scratch/
+tmp/
+temp/
+.cache/
+hf_cache/
+transformers_cache/
+torch_cache/
+triton_cache/
+*.log
+logs/
+*.out
+
+# === Python Build & Environment Artifacts ===
 __pycache__/
-*.pyc
-.venv/
+*.py[cod]
+*$py.class
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
 *.egg-info/
+.installed.cfg
+*.egg
+.venv/
+venv/
+ENV/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
 
-# === IDE / OS ===
+# === IDE, Editor & OS Metadata ===
 .vscode/
 .idea/
 *.swp
+*.swo
+*~
 Thumbs.db
+Desktop.ini
 .DS_Store
+.DS_Store?
+._*
 
-# === Explicit keeps (use git add -f if needed) ===
-# configs/gcp.env.example  — tracked (not matched by rules above)
-# results.csv              — force-add when ready: git add -f results.csv
+# === Explicit Keeps for the Core Repository ===
+!configs/gcp.env.example
+!configs/labels.json
+!results.csv
+!docs/
+!src/
+!kaggle_inference/
+!notebooks/
