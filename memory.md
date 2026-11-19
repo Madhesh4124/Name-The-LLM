@@ -75,7 +75,7 @@
 ## 4. Current State & Working Memory
 
 - **Active Phase:** `Phase 0: EDA & Data Audit`
-- **Current Branch:** `master`
+- **Current Branch:** `main`
 - **Git Remote:** `origin` $\to$ `https://github.com/Madhesh4124/Name-The-LLM.git`
 - **Next Action Items:**
   1. Download competition data to `data/`: `kaggle competitions download -c name-that-llm -p data/`
