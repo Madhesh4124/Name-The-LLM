@@ -12,16 +12,17 @@ trigger: always_on
 2. Folds are created once (folds/folds.parquet) and never regenerated.
 3. Every model writes OOF probs (N x 18) and fold-averaged test probs (n_test x 18) following the oof-contract skill. No other format.
 4. Report balanced accuracy, per-class recall and the 18x18 confusion matrix for every experiment. Never accuracy alone.
-5. Keep a branch only if grouped-CV balanced accuracy improves beyond fold-to-fold noise. Otherwise log it as cut.
+5. Keep a branch only if grouped-CV balanced accuracy improves beyond fold-to-fold noise as defined in docs/PLAN.md (paired per-fold Δ_f = score_f(new) - score_f(reference), accept only if mean(Δ) > sd(Δ) and Δ_f > 0 in at least 4 of 5 folds). Otherwise log it as cut.
 6. Never tune on the public leaderboard.
 7. State library versions used; pin to the Kaggle image versions.
 8. Do not claim something works without running it. Mark unverified items [verify].
 
 ## Technical invariants
 1. **Whitespace & markdown token mapping:** Before calling `TfidfVectorizer(analyzer='char', lowercase=False)`,
-   map these multi-char tokens to single private-use Unicode code points so sklearn's char analyzer
-   does not collapse them (e.g., `\n\n` → `\uE000`, `\n` → `\uE001`, `**` → `\uE002`,
-   `###` → `\uE003`, `##` → `\uE004`, `- ` → `\uE005`, `1. ` → `\uE006`, `—` → `\uE007`).
+   map multi-char tokens to single private-use Unicode code points using longest-first matching (dropping
+   single-char `—`) so sklearn's char analyzer does not collapse them (e.g., `\n\n` → `\uE000`, `\n` → `\uE001`,
+   `###` → `\uE002`, `##` → `\uE003`, `**` → `\uE004`, and line-anchored regex for bullets `(?m)^[-*]\s+` → `\uE005`
+   and numbered lists `(?m)^\d+\.\s+` → `\uE006`).
    Apply the same mapping at inference time. Keep the mapping in `src/text_utils.py`.
 2. **Fold-strict preprocessing:** All vectorizers, scalers, calibrators, and stackers MUST be fit
    inside a `sklearn.pipeline.Pipeline` or strictly on training-fold rows only. No exceptions.

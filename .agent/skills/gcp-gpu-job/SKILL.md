@@ -24,11 +24,11 @@ Add an accelerator flag only if the chosen machine type requires it [verify for 
 ## Job wrapper (scripts/run_job.sh, create if missing)
 1. Resume from the latest checkpoint in $BUCKET/ckpt/<run_id>/ if present.
 2. Run training inside tmux, writing a checkpoint to the bucket every N steps.
-3. On finish: gcloud storage rsync artifacts/<exp>/ to $BUCKET/oof_test/<exp>/, then `sudo shutdown -h now`.
+3. On finish: mirror artifacts to the bucket under $BUCKET/oof/<exp>/ (oof.npy, config.yaml, metrics.json, confusion_matrix.csv, env.txt) and $BUCKET/test/<exp>/ (test.npy), then `sudo shutdown -h now`.
 4. If the VM was preempted, restart it (with confirmation) and rerun the same command; it must resume.
 
 ## Pilot before full run
-Run about 100 steps, record samples/s, compute GPU-hours = folds x epochs x N_train / throughput, multiply by the current spot price from the pricing calculator.
+Run about 100 steps, record samples/s, compute GPU-hours = folds * epochs * (0.8 * N_train) / throughput / 3600, plus eval and checkpoint overhead, then multiply by the current spot price from the pricing calculator.
 
 ## Environment
 - Match Kaggle image versions for torch, transformers, scikit-learn, lightgbm.
